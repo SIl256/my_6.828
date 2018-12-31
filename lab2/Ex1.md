@@ -16,14 +16,14 @@ boot_alloc()
 	}
 	if (n > 0) {
 	    result = nextfree;
-	    if (PADDR((void *)(n + result)) >= npages * PGSIZE) {
+	    if (PADDR((void *)(n + result)) >= 0x400000) {
 		panic("boot_alloc: out of memory\n");
 	    }
 	    nextfree = ROUNDUP(nextfree + n, PGSIZE);
 	    return result;
 	}
 ```
-根据页表数量我们知道总共的物理地址有npages * PGSIZE
+根据页表数量我们知道总共的物理地址有npages * PGSIZE, 但是事实上可以用的只有[0, 4M)这部分，因为当前已经开启了分页，在这个时候只有这部分的物理地址有页表映射
 
 mem_init()
 ```c
