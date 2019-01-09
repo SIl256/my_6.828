@@ -81,7 +81,7 @@ syscall.h
 #define SYS_date   22
 
 user.h
-int date(void);
+int date(struct rtcdate*);
 
 usys.h
 SYSCALL(date)
